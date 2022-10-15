@@ -44,19 +44,23 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-between min-h-screen py-4">
+    <div className="flex flex-col justify-between min-h-screen pt-4">
       <Head>
         <title>Recipes</title>
       </Head>
 
       <div className="flex flex-col">
+        {/* HEADER */}
         <header className="flex flex-col items-center w-full text-center">
           <h1 className="text-4xl font-bold text-blue-600">Recipes</h1>
         </header>
-
+        {/* SEARCH */}
         <section className="flex justify-center w-full gap-4 px-2 mt-4">
           <label className="relative block">
-            <span className="sr-only">Search</span>
+            {/* <span className="sr-only">Search</span> */}
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+              <Image src="/icons8-search.svg" width={20} height={20} />
+            </span>
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <Image src="/icons8-search.svg" width={20} height={20} />
             </span>
@@ -70,15 +74,11 @@ const Home: NextPage = () => {
             />
           </label>
         </section>
-
-        <main className="flex flex-wrap justify-center w-full gap-4 px-2 pt-4">
+        {/* CARDS */}
+        <main className="flex flex-wrap justify-center w-full gap-2 px-2 pt-4 sm:gap-4">
           {filteredRecipes.map((recipe) => {
             return (
-              <div
-                className="flex flex-wrap items-center justify-around max-w-4xl"
-                key={recipe.id}
-                onClick={() => handleClick(recipe.id)}
-              >
+              <div key={recipe.id} onClick={() => handleClick(recipe.id)}>
                 <Card
                   recipe={recipe}
                   clickedId={clickedId}
@@ -89,8 +89,8 @@ const Home: NextPage = () => {
           })}
         </main>
       </div>
-
-      <footer className="flex justify-center w-full h-24 mt-4 border-t">
+      {/* FOOTER */}
+      <footer className="flex justify-center w-full h-12 mt-4 text-sm border-t">
         <a
           className="flex items-center justify-center gap-2 hover:text-blue-600"
           href="https://github.com/marcinhodor/"

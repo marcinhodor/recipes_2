@@ -9,7 +9,7 @@ interface CardProps {
 }
 
 const Card = ({ recipe, clickedId, cancelCardClick }: CardProps) => (
-  <div className="flex flex-col justify-center max-w-sm px-6 text-left border shadow-sm border-slate-300 h-28 hover:border-blue-600 rounded-xl hover:border-2 hover:text-blue-600">
+  <div className="flex flex-col justify-center w-full px-6 text-left border shadow-sm border-slate-300 h-28 hover:border-blue-600 rounded-xl hover:border-2 hover:text-blue-600">
     {clickedId !== recipe.id ? (
       <>
         <h3 className="text-xl font-bold">{recipe.title}</h3>

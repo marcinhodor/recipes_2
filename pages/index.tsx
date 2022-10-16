@@ -61,9 +61,9 @@ const Home: NextPage = () => {
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <Image src="/icons8-search.svg" width={20} height={20} />
             </span>
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+            {/* <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <Image src="/icons8-search.svg" width={20} height={20} />
-            </span>
+            </span> */}
             <input
               className="block w-full py-2 pl-8 pr-3 bg-white border rounded-md shadow-sm placeholder:italic placeholder:text-slate-400 border-slate-300 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
               placeholder="Filter..."
@@ -75,10 +75,14 @@ const Home: NextPage = () => {
           </label>
         </section>
         {/* CARDS */}
-        <main className="flex flex-wrap justify-center w-full gap-2 px-2 pt-4 sm:gap-4">
+        <main className="flex flex-wrap justify-center gap-2 px-2 pt-4 sm:gap-4">
           {filteredRecipes.map((recipe) => {
             return (
-              <div key={recipe.id} onClick={() => handleClick(recipe.id)}>
+              <div
+                key={recipe.id}
+                onClick={() => handleClick(recipe.id)}
+                className="flex w-96"
+              >
                 <Card
                   recipe={recipe}
                   clickedId={clickedId}

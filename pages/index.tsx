@@ -4,24 +4,37 @@ import Image from "next/image";
 
 import { Recipe } from "../models/interfaces";
 
-import React, { MouseEvent, ChangeEvent, useEffect, useState } from "react";
+import React, { MouseEvent, useEffect, useState, useMemo } from "react";
 import Card from "../components/Card";
 
 const Home: NextPage = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [query, setQuery] = useState("");
+  const [chosenTags, setChosenTags] = useState<string[]>([]);
   const [clickedId, setClickedId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputText = e.target.value;
-    const matchedItems = recipes.filter((item) =>
-      item.title.toLowerCase().includes(inputText.toLowerCase())
+  const filteredRecipes = useMemo(() => {
+    return recipes.filter(
+      (recipe) =>
+        recipe.title.toLowerCase().includes(query.toLowerCase()) &&
+        (chosenTags.length !== 0
+          ? chosenTags.some((r) => recipe.tags.includes(r))
+          : true)
     );
-    setFilteredRecipes(matchedItems);
-  };
+  }, [recipes, query, chosenTags]);
 
-  const handleClick = (id: string) => {
+  const tagsList = useMemo(() => {
+    const tags = [];
+    for (let recipe of recipes) {
+      for (let tag of recipe.tags) {
+        tags.push(tag);
+      }
+    }
+    return [...new Set(tags)].sort();
+  }, [recipes]);
+
+  const handleCardClick = (id: string) => {
     setClickedId(id);
   };
 
@@ -30,13 +43,23 @@ const Home: NextPage = () => {
     setClickedId("");
   };
 
+  const handleChipClick = (tag: string) => {
+    const tagIndex = chosenTags.indexOf(tag);
+    if (tagIndex === -1) {
+      setChosenTags((prev) => [...prev, tag].sort());
+    } else {
+      setChosenTags((prev) =>
+        prev.filter((_, index) => index !== tagIndex).sort()
+      );
+    }
+  };
+
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
       const response = await fetch("/api/recipes");
       const receivedRecipes = await response.json();
       setRecipes(receivedRecipes);
-      setFilteredRecipes(receivedRecipes);
       setIsLoading(false);
     }
 
@@ -54,6 +77,7 @@ const Home: NextPage = () => {
         <header className="flex flex-col items-center w-full text-center">
           <h1 className="text-4xl font-bold text-blue-600">Recipes</h1>
         </header>
+
         {/* SEARCH */}
         <section className="flex justify-center w-full gap-4 px-2 mt-4">
           <label className="relative block">
@@ -69,18 +93,41 @@ const Home: NextPage = () => {
               placeholder="Filter..."
               type="text"
               name="search"
-              // value={filterPhrase}
-              onChange={handleSearch}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
           </label>
         </section>
+
+        {/* Chips */}
+        <section>
+          <div className="flex flex-wrap justify-center mt-4 space-x-2">
+            {tagsList.map((tag) => {
+              return (
+                <span
+                  onClick={() => handleChipClick(tag)}
+                  key={tag}
+                  className={
+                    "flex px-4 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer align-center w-max ease" +
+                    (chosenTags.includes(tag)
+                      ? " text-white bg-blue-600 hover:bg-blue-700"
+                      : " text-gray-500 bg-gray-200 hover:bg-gray-300")
+                  }
+                >
+                  {tag}
+                </span>
+              );
+            })}
+          </div>
+        </section>
+
         {/* CARDS */}
         <main className="flex flex-wrap justify-center gap-2 px-2 pt-4 sm:gap-4">
           {filteredRecipes.map((recipe) => {
             return (
               <div
                 key={recipe.id}
-                onClick={() => handleClick(recipe.id)}
+                onClick={() => handleCardClick(recipe.id)}
                 className="flex w-96"
               >
                 <Card
@@ -93,6 +140,7 @@ const Home: NextPage = () => {
           })}
         </main>
       </div>
+
       {/* FOOTER */}
       <footer className="flex justify-center w-full h-12 mt-4 text-sm border-t">
         <a

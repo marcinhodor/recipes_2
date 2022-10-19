@@ -106,16 +106,16 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        {/* Chips */}
-        <section>
-          <div className="flex flex-wrap justify-center mt-4 space-x-2">
+        <main>
+          {/* Chips */}
+          <div className="flex mx-2 mt-4 space-x-2 overflow-auto overflow-x-scroll lg:justify-center whitespace-nowrap">
             {tagsList.map((tag) => {
               return (
                 <span
                   onClick={() => handleChipClick(tag)}
                   key={tag}
                   className={
-                    "flex px-4 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer align-center w-max ease" +
+                    "px-4 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer align-center ease min-w-max" +
                     (chosenTags.includes(tag)
                       ? " text-white bg-blue-600 hover:bg-blue-700"
                       : " text-gray-500 bg-gray-200 hover:bg-gray-300")
@@ -126,25 +126,25 @@ const Home: NextPage = () => {
               );
             })}
           </div>
-        </section>
 
-        {/* CARDS */}
-        <main className="flex flex-wrap justify-center gap-2 px-2 pt-4 sm:gap-4">
-          {filteredRecipes.map((recipe) => {
-            return (
-              <div
-                key={recipe.id}
-                onClick={() => handleCardClick(recipe.id)}
-                className="flex w-96"
-              >
-                <Card
-                  recipe={recipe}
-                  clickedId={clickedId}
-                  cancelCardClick={cancelCardClick}
-                />
-              </div>
-            );
-          })}
+          {/* CARDS */}
+          <div className="flex flex-wrap justify-center gap-2 px-2 pt-4 xl:gap-4">
+            {filteredRecipes.map((recipe) => {
+              return (
+                <div
+                  key={recipe.id}
+                  onClick={() => handleCardClick(recipe.id)}
+                  className={"flex-auto w-80 max-w-sm"}
+                >
+                  <Card
+                    recipe={recipe}
+                    clickedId={clickedId}
+                    cancelCardClick={cancelCardClick}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </main>
       </div>
 

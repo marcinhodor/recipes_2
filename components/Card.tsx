@@ -9,13 +9,16 @@ interface CardProps {
 }
 
 const Card = ({ recipe, clickedId, cancelCardClick }: CardProps) => (
-  <div className="flex flex-col justify-center w-full px-6 text-left border shadow-sm border-slate-300 h-28 hover:border-blue-600 rounded-xl hover:border-2 hover:text-blue-600">
+  <div className="flex flex-col justify-center w-full px-6 text-left border shadow border-slate-300 h-28 hover:border-blue-600 rounded-xl hover:border-2 hover:text-blue-600">
     {clickedId !== recipe.id ? (
       <>
         <h3 className="text-xl font-bold">{recipe.title}</h3>
-        <div className="flex">
+        <div className="flex text-ellipsis">
           {recipe.tags.map((tag) => (
-            <p key={tag} className="mt-2 mr-2 text-slate-500 last:mr-0">
+            <p
+              key={tag}
+              className="mt-2 mr-2 text-slate-500 last:mr-0 whitespace-nowrap"
+            >
               #{tag}
             </p>
           ))}

@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 const Add: NextPage = () => {
   //
   return (
-    <div className="flex flex-col items-center justify-center mt-3 xl:w-96">
+    <div className="flex flex-col items-center justify-center mt-3">
       {/* Title */}
       <div className="">
         <label htmlFor="title" className="mr-2 text-gray-700 form-label">

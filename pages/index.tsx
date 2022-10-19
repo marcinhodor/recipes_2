@@ -80,23 +80,30 @@ const Home: NextPage = () => {
 
         {/* SEARCH */}
         <section className="flex justify-center w-full gap-4 px-2 mt-4">
-          <label className="relative block">
-            {/* <span className="sr-only">Search</span> */}
+          <div className="relative block">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <Image src="/icons8-search.svg" width={20} height={20} />
             </span>
-            {/* <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-              <Image src="/icons8-search.svg" width={20} height={20} />
-            </span> */}
+            {query.length > 0 ? (
+              <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                <Image
+                  className="cursor-pointer"
+                  onClick={() => setQuery("")}
+                  src="/cancel-close-10373.svg"
+                  width={20}
+                  height={20}
+                />
+              </span>
+            ) : null}
             <input
-              className="block w-full py-2 pl-8 pr-3 bg-white border rounded-md shadow-sm placeholder:italic placeholder:text-slate-400 border-slate-300 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
+              className="block w-full py-2 pl-8 pr-8 bg-white border rounded-md shadow-sm placeholder:italic placeholder:text-slate-400 border-slate-300 focus:outline-none focus:border-blue-600 focus:ring-blue-600 focus:ring-1"
               placeholder="Filter..."
               type="text"
               name="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-          </label>
+          </div>
         </section>
 
         {/* Chips */}

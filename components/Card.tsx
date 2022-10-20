@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, { MouseEvent, FC } from "react";
 
 import { Recipe } from "../models/interfaces";
 
@@ -8,7 +8,11 @@ interface CardProps {
   cancelCardClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Card = ({ recipe, clickedId, cancelCardClick }: CardProps) => (
+const Card: FC<CardProps> = ({
+  recipe,
+  clickedId,
+  cancelCardClick,
+}: CardProps) => (
   <div className="flex flex-col justify-center w-full px-6 text-left border shadow border-slate-300 h-28 hover:border-blue-600 rounded-xl hover:border-2 hover:text-blue-600">
     {clickedId !== recipe.id ? (
       <>

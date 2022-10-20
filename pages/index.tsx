@@ -1,6 +1,7 @@
 import React, { MouseEvent, useEffect, useState, useMemo } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import type { NextPage } from "next";
 import { Recipe } from "../models/interfaces";
@@ -76,7 +77,9 @@ const Home: NextPage = () => {
       <div className="flex flex-col">
         {/* HEADER */}
         <header className="flex flex-col items-center w-full text-center">
-          <h1 className="text-4xl font-bold text-blue-600">Recipes</h1>
+          <Link href="/">
+            <h1 className="text-4xl font-bold text-blue-600">Recipes</h1>
+          </Link>
         </header>
 
         {/* SEARCH */}

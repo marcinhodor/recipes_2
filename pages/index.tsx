@@ -56,6 +56,12 @@ const Home: NextPage = () => {
     }
   };
 
+  const resetFilters = () => {
+    setQuery("");
+    setChosenTags([]);
+    setClickedId("");
+  };
+
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
@@ -78,7 +84,12 @@ const Home: NextPage = () => {
         {/* HEADER */}
         <header className="flex flex-col items-center w-full text-center">
           <Link href="/">
-            <h1 className="text-4xl font-bold text-blue-600">Recipes</h1>
+            <h1
+              onClick={resetFilters}
+              className="text-4xl font-bold text-blue-600 cursor-pointer"
+            >
+              Recipes
+            </h1>
           </Link>
         </header>
 

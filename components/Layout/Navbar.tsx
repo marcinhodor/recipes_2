@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import Link from "next/link";
 
 interface NavbarProps {
-  resetFilters: Function;
+  resetFilters: Function | undefined;
   username: string;
 }
 
@@ -11,7 +11,7 @@ const Navbar: FC<NavbarProps> = ({ resetFilters, username }) => {
     <nav className="z-30 flex justify-between w-full py-2 bg-white border-b-2 border-blue-600 shadow">
       <Link href="/">
         <h1
-          onClick={() => resetFilters()}
+          onClick={resetFilters ? () => resetFilters() : undefined}
           className="ml-4 text-3xl font-bold text-blue-600 cursor-pointer"
         >
           Recipes

@@ -1,9 +1,10 @@
 import React, { FC, PropsWithChildren } from "react";
 
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 interface LayoutProps {
-  resetFilters: Function;
+  resetFilters?: Function;
   username: string;
   children: JSX.Element;
 }
@@ -14,20 +15,13 @@ const Layout: FC<PropsWithChildren<LayoutProps>> = ({
   username,
 }) => {
   return (
-    <>
-      <Navbar resetFilters={resetFilters} username={username} />
-      <div>{children}</div>;{/* FOOTER */}
-      <footer className="flex justify-center w-full h-12 mt-4 text-sm border-t">
-        <a
-          className="flex items-center justify-center gap-2 hover:text-blue-600"
-          href="https://github.com/marcinhodor/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Created by Marcin Hodor
-        </a>
-      </footer>
-    </>
+    <div className="flex flex-col justify-between min-h-screen">
+      <div>
+        <Navbar resetFilters={resetFilters} username={username} />
+        <main>{children}</main>
+      </div>
+      <Footer />
+    </div>
   );
 };
 

@@ -1,77 +1,79 @@
-import { MouseEvent, useEffect, useState, useMemo } from "react";
+import { MouseEvent, useEffect, useState, useMemo, useContext } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
+import AuthContext from "../context/auth-context";
+import RecipesContext from "../context/recipes-context";
+import MiscContext from "../context/misc-context";
+
 import type { NextPage } from "next";
-import { Recipe } from "../models/interfaces";
 
 import Card from "../components/Card";
 import Spinner from "../components/Spinner";
 
 const Home: NextPage = () => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [query, setQuery] = useState("");
-  const [chosenTags, setChosenTags] = useState<string[]>([]);
-  const [clickedId, setClickedId] = useState("");
+  const authCtx = useContext(AuthContext);
+  const recipesCtx = useContext(RecipesContext);
+  const miscCtx = useContext(MiscContext);
+
   const [isLoading, setIsLoading] = useState(true);
-  const [username, setUsername] = useState("Guest");
 
   const filteredRecipes = useMemo(() => {
-    return recipes.filter(
+    return recipesCtx.recipes.filter(
       (recipe) =>
-        recipe.title.toLowerCase().includes(query.toLowerCase()) &&
-        (chosenTags.length !== 0
-          ? chosenTags.some((r) => recipe.tags.includes(r))
+        recipe.title.toLowerCase().includes(miscCtx.query.toLowerCase()) &&
+        (miscCtx.chosenTags.length !== 0
+          ? miscCtx.chosenTags.some((r) => recipe.tags.includes(r))
           : true)
     );
-  }, [recipes, query, chosenTags]);
+  }, [recipesCtx.recipes, miscCtx.query, miscCtx.chosenTags]);
 
   const tagsList = useMemo(() => {
     const tags = [];
-    for (let recipe of recipes) {
+    for (let recipe of recipesCtx.recipes) {
       for (let tag of recipe.tags) {
         tags.push(tag);
       }
     }
     return [...new Set(tags)].sort();
-  }, [recipes]);
+  }, [recipesCtx.recipes]);
 
   const handleCardClick = (id: string) => {
-    setClickedId(id);
+    miscCtx.setClickedId(id);
   };
 
   const cancelCardClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setClickedId("");
+    miscCtx.setClickedId("");
   };
 
   const handleChipClick = (tag: string) => {
-    const tagIndex = chosenTags.indexOf(tag);
+    const tagIndex = miscCtx.chosenTags.indexOf(tag);
     if (tagIndex === -1) {
-      setChosenTags((prev) => [...prev, tag].sort());
+      miscCtx.setChosenTags((prev: string[]) => [...prev, tag].sort());
     } else {
-      setChosenTags((prev) =>
+      miscCtx.setChosenTags((prev: string[]) =>
         prev.filter((_, index) => index !== tagIndex).sort()
       );
     }
   };
 
-  const resetFilters = () => {
-    setQuery("");
-    setChosenTags([]);
-    setClickedId("");
-  };
-
+  // Fetch recipes
   useEffect(() => {
     async function getData() {
       setIsLoading(true);
       const response = await fetch("/api/recipes");
       const receivedRecipes = await response.json();
-      setRecipes(receivedRecipes);
+      recipesCtx.setRecipes(receivedRecipes);
       setIsLoading(false);
     }
 
     getData();
+  }, []);
+
+  // Auth
+  useEffect(() => {
+    authCtx.setUsername("Guest");
   }, []);
 
   return (
@@ -88,11 +90,11 @@ const Home: NextPage = () => {
               <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                 <Image src="/icons8-search.svg" width={20} height={20} />
               </span>
-              {query.length > 0 ? (
+              {miscCtx.query.length > 0 ? (
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2">
                   <Image
                     className="cursor-pointer"
-                    onClick={() => setQuery("")}
+                    onClick={() => miscCtx.setQuery("")}
                     src="/cancel-close-10373.svg"
                     width={20}
                     height={20}
@@ -104,8 +106,8 @@ const Home: NextPage = () => {
                 placeholder="Filter..."
                 type="text"
                 name="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                value={miscCtx.query}
+                onChange={(e) => miscCtx.setQuery(e.target.value)}
               />
             </div>
           </section>
@@ -121,7 +123,7 @@ const Home: NextPage = () => {
                   key={tag}
                   className={
                     "px-4 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer align-center ease min-w-max outline-0 ring-0 focus:outline-none focus:ring-0" +
-                    (chosenTags.includes(tag)
+                    (miscCtx.chosenTags.includes(tag)
                       ? " text-white bg-blue-600 hover:bg-blue-700"
                       : " text-gray-500 bg-gray-200 hover:bg-gray-300")
                   }
@@ -146,7 +148,7 @@ const Home: NextPage = () => {
                   >
                     <Card
                       recipe={recipe}
-                      clickedId={clickedId}
+                      clickedId={miscCtx.clickedId}
                       cancelCardClick={cancelCardClick}
                     />
                   </div>

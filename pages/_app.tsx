@@ -3,14 +3,12 @@ import type { AppProps } from "next/app";
 import { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import AuthContext from "../context/auth-context";
-import RecipesContext from "../context/recipes-context";
+import { RecipesContextProvider } from "../context/recipes-context";
 import MiscContext from "../context/misc-context";
-
-import { Recipe } from "../models/interfaces";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [username, setUsername] = useState("Guest");
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+
   const [query, setQuery] = useState("");
   const [chosenTags, setChosenTags] = useState<string[]>([]);
   const [clickedId, setClickedId] = useState("");
@@ -23,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <AuthContext.Provider value={{ username, setUsername }}>
-      <RecipesContext.Provider value={{ recipes, setRecipes }}>
+      <RecipesContextProvider>
         <MiscContext.Provider
           value={{
             query,
@@ -39,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </Layout>
         </MiscContext.Provider>
-      </RecipesContext.Provider>
+      </RecipesContextProvider>
     </AuthContext.Provider>
   );
 }

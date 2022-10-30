@@ -4,39 +4,19 @@ import { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import AuthContext from "../context/auth-context";
 import { RecipesContextProvider } from "../context/recipes-context";
-import MiscContext from "../context/misc-context";
+import { MiscContextProvider } from "../context/misc-context";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [username, setUsername] = useState("Guest");
 
-  const [query, setQuery] = useState("");
-  const [chosenTags, setChosenTags] = useState<string[]>([]);
-  const [clickedId, setClickedId] = useState("");
-
-  const resetFilters = () => {
-    setQuery("");
-    setChosenTags([]);
-    setClickedId("");
-  };
-
   return (
     <AuthContext.Provider value={{ username, setUsername }}>
       <RecipesContextProvider>
-        <MiscContext.Provider
-          value={{
-            query,
-            setQuery,
-            chosenTags,
-            setChosenTags,
-            clickedId,
-            setClickedId,
-            resetFilters,
-          }}
-        >
+        <MiscContextProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </MiscContext.Provider>
+        </MiscContextProvider>
       </RecipesContextProvider>
     </AuthContext.Provider>
   );

@@ -1,8 +1,22 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 
-const AuthContext = React.createContext({
-  username: "",
-  setUsername: (username: string) => {},
+import Cookies from "js-cookie";
+
+type ctxTypes = {
+  token: string | null;
+  name: string;
+  isLoggedIn: boolean;
+  login: (token: string, name: string) => void;
+  logout: () => void;
+};
+
+export const AuthContext = React.createContext<ctxTypes>({
+  token: "",
+  name: "Guest",
+  isLoggedIn: false,
+  login: (token: string, name: string) => {},
+  logout: () => {},
 });
 
 type Props = {
@@ -10,11 +24,31 @@ type Props = {
 };
 
 export const AuthContextProvider: React.FC<Props> = (props) => {
-  const [username, setUsername] = useState("Guest");
+  const router = useRouter();
+
+  const [token, setToken] = useState<string | null>(null);
+  const [name, setName] = useState("Guest");
+
+  const userIsLoggedIn = !!token;
+
+  const loginHandler = (token: string, name: string) => {
+    setToken(token);
+    setName(name);
+    Cookies.set("loggedIn", "yes");
+  };
+
+  const logoutHandler = () => {
+    setToken(null);
+    Cookies.remove("loggedIn");
+    router.push("/");
+  };
 
   const contextValue = {
-    username,
-    setUsername,
+    token,
+    name,
+    isLoggedIn: userIsLoggedIn,
+    login: loginHandler,
+    logout: logoutHandler,
   };
 
   return (

@@ -10,7 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Recipe[]>
 ) {
-  const receivedRecipes: Recipe[] = [];
+  const data: Recipe[] = [];
   const querySnapshot = await getDocs(collection(firestore, "recipes"));
   querySnapshot.forEach((doc) => {
     const recipesObject: Recipe = {
@@ -20,7 +20,7 @@ export default async function handler(
       tags: doc.data().tags,
     };
     // console.log(doc.id, doc.data());
-    receivedRecipes.push(recipesObject);
+    data.push(recipesObject);
   });
-  res.status(200).json(receivedRecipes);
+  res.status(200).json(data);
 }

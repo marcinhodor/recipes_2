@@ -71,11 +71,6 @@ const Home: NextPage = () => {
     getData();
   }, []);
 
-  // Auth
-  useEffect(() => {
-    authCtx.setUsername("Guest");
-  }, []);
-
   return (
     <div className="flex flex-col">
       <Head>

@@ -10,38 +10,45 @@ const Navbar: FC = () => {
   const miscCtx = useContext(MiscContext);
 
   const router = useRouter();
-  // console.log();
 
   return (
-    <nav className="z-30 flex justify-between w-full py-2 bg-white border-b-2 border-blue-600 shadow">
-      <Link href="/">
-        <h1
-          onClick={() => miscCtx.resetFilters()}
-          className="ml-4 text-3xl font-bold text-blue-600 cursor-pointer"
-        >
-          Recipes
-        </h1>
-      </Link>
-      {router.pathname !== "/login" && (
-        <div className="flex justify-end">
-          <span className="flex items-center">Hello {authCtx.name}!</span>
-          {!authCtx.isLoggedIn ? (
-            <Link href="/login">
-              <button className="p-2 mx-4 text-gray-800 bg-transparent border border-gray-300 rounded hover:bg-gray-100 hover:text-gray-700">
-                Sign in
+    <>
+      <nav className="z-30 flex justify-between w-full py-2 text-sm text-gray-100 bg-blue-600 border-b-2 border-blue-600 shadow md:text-base">
+        <Link href="/">
+          <h1
+            onClick={() => miscCtx.resetFilters()}
+            className="ml-2 text-3xl font-bold cursor-pointer md:ml-4"
+          >
+            Recipes
+          </h1>
+        </Link>
+        {router.pathname !== "/login" && (
+          <>
+            <Link href="/add">
+              <button className="p-2 mx-4 bg-transparent border border-gray-100 rounded hover:bg-blue-700">
+                Add
               </button>
             </Link>
-          ) : (
-            <button
-              onClick={authCtx.logout}
-              className="p-2 mx-4 text-red-800 bg-transparent border border-red-300 rounded hover:bg-red-100 hover:text-red-700"
-            >
-              Logout
-            </button>
-          )}
-        </div>
-      )}
-    </nav>
+            <div className="flex justify-end">
+              {!authCtx.isLoggedIn ? (
+                <Link href="/login">
+                  <button className="p-2 mx-2 bg-transparent border border-gray-100 rounded md:mx-4 hover:bg-blue-700">
+                    Sign in
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  onClick={authCtx.logout}
+                  className="p-2 mx-2 text-blue-600 bg-transparent bg-gray-100 border border-gray-100 rounded md:mx-4 hover:bg-gray-200 "
+                >
+                  Logout
+                </button>
+              )}
+            </div>
+          </>
+        )}
+      </nav>
+    </>
   );
 };
 

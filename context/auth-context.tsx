@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 
 type ctxTypes = {
   token: string | null;
-  name: string;
   isLoggedIn: boolean;
   login: (token: string, name: string) => void;
   logout: () => void;
@@ -13,7 +12,6 @@ type ctxTypes = {
 
 export const AuthContext = React.createContext<ctxTypes>({
   token: "",
-  name: "Guest",
   isLoggedIn: false,
   login: (token: string, name: string) => {},
   logout: () => {},
@@ -27,13 +25,11 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const router = useRouter();
 
   const [token, setToken] = useState<string | null>(null);
-  const [name, setName] = useState("Guest");
 
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token: string, name: string) => {
     setToken(token);
-    setName(name);
     Cookies.set("loggedIn", "yes");
   };
 
@@ -45,7 +41,6 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const contextValue = {
     token,
-    name,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,

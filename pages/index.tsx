@@ -2,7 +2,6 @@ import { MouseEvent, useEffect, useState, useMemo, useContext } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
-import AuthContext from "../context/auth-context";
 import RecipesContext from "../context/recipes-context";
 import MiscContext from "../context/misc-context";
 
@@ -12,7 +11,6 @@ import Card from "../components/Card";
 import Spinner from "../components/Spinner";
 
 const Home: NextPage = () => {
-  const authCtx = useContext(AuthContext);
   const recipesCtx = useContext(RecipesContext);
   const miscCtx = useContext(MiscContext);
 

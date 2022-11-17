@@ -4,15 +4,18 @@ import Layout from "../components/Layout/Layout";
 import { AuthContextProvider } from "../context/auth-context";
 import { RecipesContextProvider } from "../context/recipes-context";
 import { MiscContextProvider } from "../context/misc-context";
+import ProtectRoute from "../components/HOC/ProtectRoute";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthContextProvider>
       <RecipesContextProvider>
         <MiscContextProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <ProtectRoute>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ProtectRoute>
         </MiscContextProvider>
       </RecipesContextProvider>
     </AuthContextProvider>

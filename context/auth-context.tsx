@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 
-import Cookies from "js-cookie";
-
 type ctxTypes = {
   token: string | null;
   isLoggedIn: boolean;
@@ -30,12 +28,10 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const loginHandler = (token: string, name: string) => {
     setToken(token);
-    Cookies.set("loggedIn", "yes");
   };
 
   const logoutHandler = () => {
     setToken(null);
-    Cookies.remove("loggedIn");
     router.push("/");
   };
 

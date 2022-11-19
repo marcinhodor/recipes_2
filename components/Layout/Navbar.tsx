@@ -35,7 +35,7 @@ const Navbar: FC = () => {
               {!authCtx.isLoggedIn ? (
                 <Link href="/login">
                   <button className="p-2 mx-2 bg-transparent border border-gray-100 rounded md:mx-4 hover:bg-blue-700">
-                    Sign in
+                    Admin
                   </button>
                 </Link>
               ) : (

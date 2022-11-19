@@ -10,7 +10,7 @@ const NoAccessModal: FC = () => {
         <p>Only Admins can add or modify recipes.</p>
         <button
           onClick={() => miscCtx.setShowNoAccessModal(false)}
-          className="w-20 p-1 mt-1 text-white bg-gray-800 rounded hover:bg-gray-900"
+          className="w-20 p-1 mt-1 text-white bg-gray-600 rounded hover:bg-gray-700"
         >
           Dismiss
         </button>

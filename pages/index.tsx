@@ -108,7 +108,7 @@ const Home: NextPage = () => {
 
         <div>
           {/* Chips */}
-          <div className="flex mx-2 mt-2 space-x-2 overflow-auto overflow-x-scroll md:mt-4 lg:justify-center whitespace-nowrap">
+          <div className="flex mx-2 mt-2 space-x-2 overflow-x-auto md:mt-4 lg:justify-center whitespace-nowrap">
             {tagsList.map((tag) => {
               return (
                 <span

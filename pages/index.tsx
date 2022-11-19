@@ -78,7 +78,7 @@ const Home: NextPage = () => {
       <div className="flex flex-col">
         {/* SEARCH */}
         {isLoading ? null : (
-          <section className="flex justify-center w-full gap-4 px-2 mt-4">
+          <section className="flex justify-center w-full gap-4 px-2 mt-2 md:mt-4">
             <div className="relative block">
               <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                 <Image src="/icons8-search.svg" width={20} height={20} />
@@ -108,7 +108,7 @@ const Home: NextPage = () => {
 
         <div>
           {/* Chips */}
-          <div className="flex mx-2 mt-4 space-x-2 overflow-auto overflow-x-scroll lg:justify-center whitespace-nowrap">
+          <div className="flex mx-2 mt-2 space-x-2 overflow-auto overflow-x-scroll md:mt-4 lg:justify-center whitespace-nowrap">
             {tagsList.map((tag) => {
               return (
                 <span
@@ -128,7 +128,7 @@ const Home: NextPage = () => {
           </div>
 
           {/* CARDS */}
-          <div className="flex flex-wrap justify-center gap-2 px-2 pt-4 xl:gap-4">
+          <div className="flex flex-wrap justify-center gap-2 px-2 pt-2 md:pt-4 xl:gap-4">
             {isLoading ? (
               <Spinner />
             ) : (

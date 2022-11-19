@@ -2,6 +2,7 @@ import { useRef, useContext, useState } from "react";
 import { useRouter } from "next/router";
 
 import AuthContext from "../context/auth-context";
+import Link from "next/link";
 
 type Data = {
   idToken: string;
@@ -58,9 +59,9 @@ const Auth = () => {
   };
 
   return (
-    <div className="max-w-sm p-6 mx-auto mt-8 bg-white rounded-lg shadow-lg">
+    <div className="max-w-sm p-4 mx-auto bg-white rounded-lg shadow-lg md:p-6 md:mt-4">
       <form onSubmit={submitHandler}>
-        <div className="mb-6 form-group">
+        <div className="mb-4 md:mb-6 form-group">
           <label
             htmlFor="inputEmail"
             className="inline-block mb-2 text-gray-700 form-label"
@@ -75,7 +76,7 @@ const Auth = () => {
             id="inputEmail"
           />
         </div>
-        <div className="mb-6 form-group">
+        <div className="mb-4 md:mb-6 form-group">
           <label
             htmlFor="inputPassword"
             className="inline-block mb-2 text-gray-700 form-label"
@@ -90,7 +91,7 @@ const Auth = () => {
             ref={passwordInputRef}
           />
         </div>
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4 md:mb-6">
           <div className="form-group form-check">
             <input
               type="checkbox"
@@ -98,25 +99,26 @@ const Auth = () => {
               id="exampleCheck2"
             />
             <label
-              className="inline-block text-gray-800 form-check-label"
+              className="inline-block text-sm text-gray-800 form-check-label"
               htmlFor="exampleCheck2"
             >
               Remember me
             </label>
           </div>
-          <a
-            href="#!"
-            className="text-blue-600 transition duration-200 ease-in-out hover:text-blue-700 focus:text-blue-700"
-          >
-            Reset password
-          </a>
         </div>
-        <button
-          type="submit"
-          className=" w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-        >
-          Sign in
-        </button>
+        <div className="flex justify-around">
+          <button
+            type="submit"
+            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          >
+            Sign in
+          </button>
+          <Link href="..">
+            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
+              Cancel
+            </button>
+          </Link>
+        </div>
       </form>
     </div>
   );

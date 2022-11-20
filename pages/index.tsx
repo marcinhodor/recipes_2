@@ -9,10 +9,12 @@ import type { NextPage } from "next";
 
 import Card from "../components/Card";
 import Spinner from "../components/Spinner";
+import AuthContext from "../context/auth-context";
 
 const Home: NextPage = () => {
   const recipesCtx = useContext(RecipesContext);
   const miscCtx = useContext(MiscContext);
+  const authCtx = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -67,6 +69,12 @@ const Home: NextPage = () => {
     }
 
     getData();
+  }, []);
+
+  // Get existing token from LocalStorage
+  useEffect(() => {
+    const initialToken = localStorage.getItem("token");
+    authCtx.setToken(initialToken);
   }, []);
 
   return (

@@ -3,15 +3,17 @@ import { useRouter } from "next/router";
 
 type ctxTypes = {
   token: string | null;
+  setToken: (token: string | null) => void;
   isLoggedIn: boolean;
-  login: (token: string, name: string) => void;
+  login: (token: string | null) => void;
   logout: () => void;
 };
 
 export const AuthContext = React.createContext<ctxTypes>({
   token: "",
+  setToken: (token: string | null) => {},
   isLoggedIn: false,
-  login: (token: string, name: string) => {},
+  login: (token: string | null) => {},
   logout: () => {},
 });
 
@@ -23,20 +25,24 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
   const router = useRouter();
 
   const [token, setToken] = useState<string | null>(null);
-
   const userIsLoggedIn = !!token;
 
-  const loginHandler = (token: string, name: string) => {
+  const loginHandler = (token: string | null) => {
+    if (typeof token === "string") {
+      localStorage.setItem("token", token);
+    }
     setToken(token);
   };
 
   const logoutHandler = () => {
     setToken(null);
+    localStorage.removeItem("token");
     router.push("/");
   };
 
   const contextValue = {
     token,
+    setToken,
     isLoggedIn: userIsLoggedIn,
     login: loginHandler,
     logout: logoutHandler,

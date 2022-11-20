@@ -71,10 +71,15 @@ const Home: NextPage = () => {
     getData();
   }, []);
 
-  // Get existing token from LocalStorage
+  // Get existing token and token remaining time from LocalStorage
   useEffect(() => {
-    const initialToken = localStorage.getItem("token");
-    authCtx.setToken(initialToken);
+    const tokenData = authCtx.retrieveStoredToken();
+    if (tokenData) {
+      console.log(tokenData.duration);
+
+      authCtx.setToken(tokenData.token);
+      authCtx.logoutTimer = setTimeout(authCtx.logout, tokenData.duration);
+    }
   }, []);
 
   return (

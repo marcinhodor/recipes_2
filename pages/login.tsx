@@ -6,7 +6,7 @@ import Link from "next/link";
 
 type Data = {
   idToken: string;
-  email: string;
+  expiresIn: string;
   error: string;
 };
 
@@ -48,9 +48,11 @@ const Auth = () => {
         // alert(data.error);
         // console.log(data);
       } else {
-        const { idToken, email } = data;
-        const username = email.substring(0, email.indexOf("@"));
-        authCtx.login(idToken, username);
+        const { idToken, expiresIn } = data;
+        const expirationTime = new Date(
+          new Date().getTime() + +expiresIn * 1000
+        );
+        authCtx.login(idToken, expirationTime.toString());
         router.push("/");
       }
     } catch (err) {

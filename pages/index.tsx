@@ -28,15 +28,17 @@ const Home: NextPage = () => {
     );
   }, [recipesCtx.recipes, miscCtx.query, miscCtx.chosenTags]);
 
-  const tagsList = useMemo(() => {
-    const tags = [];
-    for (let recipe of recipesCtx.recipes) {
-      for (let tag of recipe.tags) {
-        tags.push(tag);
-      }
-    }
-    return [...new Set(tags)].sort();
-  }, [recipesCtx.recipes]);
+  // const tagsList = useMemo(() => {
+  //   const tags = [];
+  //   for (let recipe of recipesCtx.recipes) {
+  //     for (let tag of recipe.tags) {
+  //       tags.push(tag);
+  //     }
+  //   }
+  //   return [...new Set(tags)].sort();
+  // }, [recipesCtx.recipes]);
+
+  const tagsList = recipesCtx.tagsList;
 
   const handleCardClick = (id: string) => {
     miscCtx.setClickedId(id);

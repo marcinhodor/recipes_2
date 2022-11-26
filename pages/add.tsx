@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext, useLayoutEffect } from "react";
+import AddModifyForm from "../components/AddModifyForm";
 
 import AuthContext from "../context/auth-context";
 import MiscContext from "../context/misc-context";
@@ -17,7 +18,7 @@ const Add: NextPage = () => {
     }
   }, []);
 
-  return <h1>add</h1>;
+  return <AddModifyForm />;
 };
 
 export default Add;

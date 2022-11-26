@@ -78,7 +78,7 @@ const Auth = () => {
             id="inputEmail"
           />
         </div>
-        <div className="mb-4 md:mb-6 form-group">
+        <div className="mb-6 md:mb-8 form-group">
           <label
             htmlFor="inputPassword"
             className="inline-block mb-2 text-gray-700 form-label"
@@ -92,21 +92,6 @@ const Auth = () => {
             placeholder="Password"
             ref={passwordInputRef}
           />
-        </div>
-        <div className="flex items-center justify-between mb-4 md:mb-6">
-          <div className="form-group form-check">
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 align-top transition duration-200 bg-white bg-center bg-no-repeat bg-contain border border-gray-300 rounded-sm appearance-none cursor-pointer form-check-input checked:bg-blue-600 checked:border-blue-600 focus:outline-none"
-              id="exampleCheck2"
-            />
-            <label
-              className="inline-block text-sm text-gray-800 form-check-label"
-              htmlFor="exampleCheck2"
-            >
-              Remember me
-            </label>
-          </div>
         </div>
         <div className="flex justify-around">
           <button

@@ -1,15 +1,15 @@
-import { MouseEvent, useEffect, useState, useMemo, useContext } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import Head from "next/head";
 import Image from "next/image";
-
-import RecipesContext from "../context/recipes-context";
-import MiscContext from "../context/misc-context";
 
 import type { NextPage } from "next";
 
 import Card from "../components/Card";
 import Spinner from "../components/Spinner";
+
 import AuthContext from "../context/auth-context";
+import RecipesContext from "../context/recipes-context";
+import MiscContext from "../context/misc-context";
 
 const Home: NextPage = () => {
   const recipesCtx = useContext(RecipesContext);
@@ -28,26 +28,7 @@ const Home: NextPage = () => {
     );
   }, [recipesCtx.recipes, miscCtx.query, miscCtx.chosenTags]);
 
-  // const tagsList = useMemo(() => {
-  //   const tags = [];
-  //   for (let recipe of recipesCtx.recipes) {
-  //     for (let tag of recipe.tags) {
-  //       tags.push(tag);
-  //     }
-  //   }
-  //   return [...new Set(tags)].sort();
-  // }, [recipesCtx.recipes]);
-
   const tagsList = recipesCtx.tagsList;
-
-  const handleCardClick = (id: string) => {
-    miscCtx.setClickedId(id);
-  };
-
-  const cancelCardClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    miscCtx.setClickedId("");
-  };
 
   const handleChipClick = (tag: string) => {
     const tagIndex = miscCtx.chosenTags.indexOf(tag);
@@ -77,7 +58,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const tokenData = authCtx.retrieveStoredToken();
     if (tokenData) {
-      console.log(tokenData.duration);
+      // console.log(tokenData.duration);
 
       authCtx.setToken(tokenData.token);
       authCtx.logoutTimer = setTimeout(authCtx.logout, tokenData.duration);
@@ -130,7 +111,7 @@ const Home: NextPage = () => {
                   onClick={() => handleChipClick(tag)}
                   key={tag}
                   className={
-                    "px-4 py-2 text-sm font-semibold transition duration-300 rounded-full cursor-pointer align-center ease min-w-max outline-0 ring-0 focus:outline-none focus:ring-0" +
+                    "px-4 py-2 text-sm font-semibold transition duration-300 rounded-md cursor-pointer align-center ease min-w-max outline-0 ring-0 focus:outline-none focus:ring-0" +
                     (miscCtx.chosenTags.includes(tag)
                       ? " text-white bg-blue-600 hover:bg-blue-700"
                       : " text-gray-500 bg-gray-200 hover:bg-gray-300")
@@ -143,22 +124,14 @@ const Home: NextPage = () => {
           </div>
 
           {/* CARDS */}
-          <div className="flex flex-wrap justify-center gap-2 px-2 pt-2 md:pt-4 xl:gap-4">
+          <div className="grid items-center grid-cols-1 gap-2 px-2 mt-2 md:grid-cols-2 md:gap-4 md:px-4 md:mt-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {isLoading ? (
               <Spinner />
             ) : (
               filteredRecipes.map((recipe) => {
                 return (
-                  <div
-                    key={recipe.id}
-                    onClick={() => handleCardClick(recipe.id)}
-                    className={"flex-auto w-80 max-w-sm"}
-                  >
-                    <Card
-                      recipe={recipe}
-                      clickedId={miscCtx.clickedId}
-                      cancelCardClick={cancelCardClick}
-                    />
+                  <div key={recipe.id}>
+                    <Card recipe={recipe} />
                   </div>
                 );
               })

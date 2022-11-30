@@ -1,52 +1,43 @@
-import React, { MouseEvent, FC } from "react";
+import Link from "next/link";
+import React, { FC, useContext } from "react";
+
+import Button from "./Layout/Button";
 
 import { Recipe } from "../models/interfaces";
+import MiscContext from "../context/misc-context";
 
 interface CardProps {
   recipe: Recipe;
-  clickedId: string;
-  cancelCardClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Card: FC<CardProps> = ({
-  recipe,
-  clickedId,
-  cancelCardClick,
-}: CardProps) => (
-  <div className="flex flex-col justify-center w-full px-6 text-left border shadow border-slate-300 h-28 hover:border-blue-600 rounded-xl hover:border-2 hover:text-blue-600">
-    {clickedId !== recipe.id ? (
-      <>
-        <h3 className="text-xl font-bold">{recipe.title}</h3>
-        <div className="flex text-ellipsis">
-          {recipe.tags.map((tag) => (
-            <p
-              key={tag}
-              className="mt-2 mr-2 text-slate-500 last:mr-0 whitespace-nowrap"
-            >
-              #{tag}
-            </p>
-          ))}
-        </div>
-      </>
-    ) : (
-      <div className="flex flex-col">
-        <h3 className="mb-2 text-xl font-bold">{recipe.title}</h3>
-        <div className="flex place-content-around">
-          <a href={recipe.link} target="_blank">
-            <button className="w-32 px-2 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
-              Go to URL
-            </button>
-          </a>
-          <button
-            className="w-32 px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-700"
-            onClick={(e) => cancelCardClick(e)}
-          >
-            Cancel
-          </button>
+const Card: FC<CardProps> = ({ recipe }: CardProps) => {
+  const miscCtx = useContext(MiscContext);
+
+  return (
+    <div className="p-2 border border-gray-200 rounded-md shadow-sm">
+      <h3 className="text-lg font-bold">{recipe.title}</h3>
+      <div className="flex gap-2">
+        {recipe.tags.map((tag) => (
+          <p key={tag} className="text-gray-500">
+            #{tag}
+          </p>
+        ))}
+      </div>
+      <div className="flex justify-around mt-1">
+        <a href={recipe.link} target="_blank" rel="noopener noreferrer">
+          <Button variant="blue">Link</Button>
+        </a>
+        <Link href={`/edit/${recipe.id}`}>
+          <div>
+            <Button variant="gray">Edit</Button>
+          </div>
+        </Link>
+        <div onClick={() => miscCtx.setShowDeleteModal(true)}>
+          <Button variant="red">Delete</Button>
         </div>
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
+};
 
 export default Card;

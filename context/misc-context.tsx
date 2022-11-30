@@ -10,6 +10,8 @@ interface MiscContext {
   resetFilters: () => void;
   showNoAccessModal: boolean;
   setShowNoAccessModal: (modifier: boolean) => void;
+  showDeleteModal: boolean;
+  setShowDeleteModal: (modifier: boolean) => void;
 }
 
 const MiscContext = React.createContext<MiscContext>({
@@ -22,6 +24,8 @@ const MiscContext = React.createContext<MiscContext>({
   resetFilters: () => {},
   showNoAccessModal: false,
   setShowNoAccessModal: (modifier: boolean) => {},
+  showDeleteModal: false,
+  setShowDeleteModal: (modifier: boolean) => {},
 });
 
 type Props = {
@@ -33,6 +37,7 @@ export const MiscContextProvider: React.FC<Props> = (props) => {
   const [chosenTags, setChosenTags] = useState<string[]>([]);
   const [clickedId, setClickedId] = useState("");
   const [showNoAccessModal, setShowNoAccessModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const resetFilters = () => {
     setQuery("");
@@ -50,6 +55,8 @@ export const MiscContextProvider: React.FC<Props> = (props) => {
     resetFilters,
     showNoAccessModal,
     setShowNoAccessModal,
+    showDeleteModal,
+    setShowDeleteModal,
   };
 
   return (

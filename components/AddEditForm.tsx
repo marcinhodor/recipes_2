@@ -1,16 +1,24 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { FC, FormEvent, useContext, useRef, useState } from "react";
+import React, { FC, FormEvent, useContext, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
 import RecipesContext from "../context/recipes-context";
 
-const AddModifyForm: FC = () => {
+const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
   const recipesCtx = useContext(RecipesContext);
 
-  const titleRef = useRef<HTMLInputElement | null>(null);
-  const linkRef = useRef<HTMLInputElement | null>(null);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const editedRecipe = recipesCtx.recipes.filter(
+    (recipe) => recipe.id === recipeId
+  )[0];
+
+  const [title, setTitle] = useState(editedRecipe ? editedRecipe.title : "");
+  const [link, setLink] = useState(editedRecipe ? editedRecipe.link : "");
+  const [tags, setTags] = useState<string[]>(
+    editedRecipe ? editedRecipe.tags : []
+  );
+
+  useEffect(() => console.log(tags), [tags]);
 
   const [errors, setErrors] = useState({
     titleError: false,
@@ -19,6 +27,7 @@ const AddModifyForm: FC = () => {
   });
 
   const router = useRouter();
+  // console.log(router.pathname);
 
   const tagsSelectOptions = () =>
     recipesCtx.tagsList.map((option: string) => {
@@ -32,9 +41,9 @@ const AddModifyForm: FC = () => {
       linkError: false,
       tagsError: false,
     });
-    const titleError = titleRef.current?.value === "";
-    const linkError = linkRef.current?.value === "";
-    const tagsError = selectedTags.length === 0;
+    const titleError = title.length === 0;
+    const linkError = link.length === 0;
+    const tagsError = tags.length === 0;
 
     if (titleError || linkError || tagsError) {
       if (titleError) {
@@ -54,19 +63,31 @@ const AddModifyForm: FC = () => {
       }
       return;
     }
+
+    let APIurl: string;
+    let APImethod: string;
+
+    if (router.pathname.includes("/add")) {
+      APIurl = "/api/new";
+      APImethod = "POST";
+    } else {
+      APIurl = "/api/edit";
+      APImethod = "PUT";
+    }
+
     try {
-      const res = await fetch("/api/new", {
-        method: "POST",
+      const res = await fetch(APIurl, {
+        method: APImethod,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: titleRef.current?.value,
-          link: linkRef.current?.value,
-          tags: selectedTags,
+          id: recipeId,
+          title,
+          link,
+          tags,
         }),
       });
-      // console.log(res);
       router.push("/");
     } catch (error) {
       console.log(error);
@@ -74,7 +95,7 @@ const AddModifyForm: FC = () => {
   };
 
   return (
-    <div className="block max-w-sm p-4 m-auto bg-white rounded-lg shadow-lg md:p-6 md:mt-6">
+    <div className="block max-w-sm p-4 m-auto bg-white rounded-md shadow-lg md:p-6 md:mt-6">
       <form onSubmit={(e) => submitHandler(e)}>
         <div className="mb-4 md:mb-6 form-group">
           <label
@@ -86,8 +107,9 @@ const AddModifyForm: FC = () => {
           <input
             id="InputTitle"
             type="text"
-            ref={titleRef}
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-800 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-800 focus:bg-white focus:border-blue-600 focus:outline-none"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-800 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-800 focus:bg-white focus:border-blue-600 focus:outline-none"
             placeholder="Enter title"
           />
           {errors.titleError && (
@@ -107,8 +129,9 @@ const AddModifyForm: FC = () => {
           <input
             id="InputLink"
             type="text"
-            ref={linkRef}
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-800 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-800 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             placeholder="Enter Link"
           />
           {errors.linkError && (
@@ -127,9 +150,14 @@ const AddModifyForm: FC = () => {
           <CreatableSelect
             isMulti
             options={tagsSelectOptions()}
-            onChange={(tags) => {
-              setSelectedTags(tags.map((tag) => tag.value));
-            }}
+            value={tags.map((tag) => {
+              return { label: tag, value: tag };
+            })}
+            onChange={(tags) =>
+              tags.map((tag) => {
+                setTags((prev) => [...new Set([...prev, tag.value])]);
+              })
+            }
           />
           {errors.tagsError && (
             <small className="block mt-1 text-xs text-red-600">
@@ -140,12 +168,12 @@ const AddModifyForm: FC = () => {
         <div className="flex justify-around">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
           >
             Save
           </button>
           <Link href="..">
-            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
+            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
               Cancel
             </button>
           </Link>

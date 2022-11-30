@@ -1,7 +1,7 @@
 import { useRef, useContext, useState } from "react";
 import { useRouter } from "next/router";
 
-import AuthContext from "../context/auth-context";
+import AuthContext from "../../context/auth-context";
 import Link from "next/link";
 
 type Data = {
@@ -61,7 +61,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="max-w-sm p-4 mx-auto bg-white rounded-lg shadow-lg md:p-6 md:mt-4">
+    <div className="max-w-sm p-4 mx-auto bg-white rounded-md shadow-lg md:p-6 md:mt-4">
       <form onSubmit={submitHandler}>
         <div className="mb-4 md:mb-6 form-group">
           <label
@@ -72,7 +72,7 @@ const Auth = () => {
           </label>
           <input
             type="email"
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             placeholder="Enter email"
             ref={emailInputRef}
             id="inputEmail"
@@ -87,7 +87,7 @@ const Auth = () => {
           </label>
           <input
             type="password"
-            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             id="inputPassword"
             placeholder="Password"
             ref={passwordInputRef}
@@ -96,12 +96,12 @@ const Auth = () => {
         <div className="flex justify-around">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
           >
             Sign in
           </button>
           <Link href="..">
-            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
+            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
               Cancel
             </button>
           </Link>

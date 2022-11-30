@@ -27,21 +27,21 @@ const Navbar: FC = () => {
         {router.pathname !== "/login" && (
           <>
             <Link href="/add">
-              <button className="p-2 mx-4 bg-transparent border border-gray-100 rounded hover:bg-blue-700">
+              <button className="p-2 mx-4 bg-transparent border border-gray-100 rounded-md hover:bg-blue-700">
                 Add
               </button>
             </Link>
             <div className="flex justify-end">
               {!authCtx.isLoggedIn ? (
                 <Link href="/login">
-                  <button className="p-2 mx-2 bg-transparent border border-gray-100 rounded md:mx-4 hover:bg-blue-700">
+                  <button className="p-2 mx-2 bg-transparent border border-gray-100 rounded-md md:mx-4 hover:bg-blue-700">
                     Sign In
                   </button>
                 </Link>
               ) : (
                 <button
                   onClick={authCtx.logout}
-                  className="p-2 mx-2 text-blue-600 bg-transparent bg-gray-100 border border-gray-100 rounded md:mx-4 hover:bg-gray-200"
+                  className="p-2 mx-2 text-blue-600 bg-transparent bg-gray-100 border border-gray-100 rounded-md md:mx-4 hover:bg-gray-200"
                 >
                   Logout
                 </button>

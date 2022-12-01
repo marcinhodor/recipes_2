@@ -104,7 +104,7 @@ const Home: NextPage = () => {
 
         <div>
           {/* Chips */}
-          <div className="flex mx-2 mt-2 space-x-2 overflow-x-auto md:mt-4 lg:justify-center whitespace-nowrap">
+          <div className="flex mx-2 mt-2 space-x-2 overflow-x-auto select-none md:mt-4 lg:justify-center whitespace-nowrap">
             {tagsList.map((tag) => {
               return (
                 <span
@@ -124,19 +124,19 @@ const Home: NextPage = () => {
           </div>
 
           {/* CARDS */}
-          <div className="grid items-center grid-cols-1 gap-2 px-2 mt-2 md:grid-cols-2 md:gap-4 md:px-4 md:mt-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              filteredRecipes.map((recipe) => {
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <div className="grid items-center grid-cols-1 gap-2 px-2 mt-2 md:grid-cols-2 md:gap-4 md:px-4 md:mt-4 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {filteredRecipes.map((recipe) => {
                 return (
                   <div key={recipe.id}>
                     <Card recipe={recipe} />
                   </div>
                 );
-              })
-            )}
-          </div>
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

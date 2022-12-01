@@ -38,9 +38,9 @@ const Card: FC<CardProps> = ({ recipe }: CardProps) => {
   };
 
   return (
-    <div className="p-2 border border-gray-200 rounded-md shadow-sm">
+    <div className="p-2 border border-gray-200 rounded-md shadow-sm md:p-4">
       <h3 className="text-lg font-bold">{recipe.title}</h3>
-      <div className="flex gap-2">
+      <div className="flex gap-2 md:pb-2">
         {recipe.tags.map((tag) => (
           <p key={tag} className="text-gray-500">
             #{tag}

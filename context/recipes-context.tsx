@@ -6,12 +6,16 @@ type RecipeContext = {
   recipes: Recipe[];
   setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
   tagsList: string[];
+  recipeIdToDelete: string;
+  setRecipeIdToDelete: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const RecipesContext = React.createContext<RecipeContext>({
   recipes: [],
   setRecipes: () => null,
   tagsList: [],
+  recipeIdToDelete: "",
+  setRecipeIdToDelete: () => null,
 });
 
 type Props = {
@@ -20,6 +24,7 @@ type Props = {
 
 export const RecipesContextProvider: React.FC<Props> = (props) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipeIdToDelete, setRecipeIdToDelete] = useState("");
 
   const tagsList = useMemo(() => {
     const tags = [];
@@ -35,6 +40,8 @@ export const RecipesContextProvider: React.FC<Props> = (props) => {
     recipes,
     setRecipes,
     tagsList,
+    recipeIdToDelete,
+    setRecipeIdToDelete,
   };
 
   return (

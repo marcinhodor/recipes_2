@@ -6,6 +6,7 @@ import Button from "./Layout/Button";
 import { Recipe } from "../models/interfaces";
 import MiscContext from "../context/misc-context";
 import AuthContext from "../context/auth-context";
+import RecipesContext from "../context/recipes-context";
 import { useRouter } from "next/router";
 
 interface CardProps {
@@ -15,16 +16,9 @@ interface CardProps {
 const Card: FC<CardProps> = ({ recipe }: CardProps) => {
   const miscCtx = useContext(MiscContext);
   const authCtx = useContext(AuthContext);
+  const recipeCtx = useContext(RecipesContext);
 
   const router = useRouter();
-
-  const handleDeleteClick = () => {
-    if (!authCtx.isLoggedIn) {
-      miscCtx.setShowNoAccessModal(true);
-      return;
-    }
-    miscCtx.setShowDeleteModal(true);
-  };
 
   const handleEditClick = (url: string) => {
     if (!authCtx.isLoggedIn) {
@@ -32,6 +26,15 @@ const Card: FC<CardProps> = ({ recipe }: CardProps) => {
       return;
     }
     router.push(url);
+  };
+
+  const handleDeleteClick = (id: string) => {
+    if (!authCtx.isLoggedIn) {
+      miscCtx.setShowNoAccessModal(true);
+      return;
+    }
+    recipeCtx.setRecipeIdToDelete(id);
+    miscCtx.setShowDeleteModal(true);
   };
 
   return (
@@ -51,7 +54,7 @@ const Card: FC<CardProps> = ({ recipe }: CardProps) => {
         <div onClick={() => handleEditClick(`/edit/${recipe.id}`)}>
           <Button variant="gray">Edit</Button>
         </div>
-        <div onClick={handleDeleteClick}>
+        <div onClick={() => handleDeleteClick(recipe.id)}>
           <Button variant="red">Delete</Button>
         </div>
       </div>

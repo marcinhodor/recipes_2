@@ -111,7 +111,7 @@ const Home: NextPage = () => {
                   onClick={() => handleChipClick(tag)}
                   key={tag}
                   className={
-                    "px-4 py-2 text-sm font-semibold transition duration-300 rounded-md cursor-pointer align-center ease min-w-max outline-0 ring-0 focus:outline-none focus:ring-0" +
+                    "px-4 py-2 text-sm font-semibold transition duration-150 rounded-md cursor-pointer align-center ease min-w-max outline-0 ring-0 focus:outline-none focus:ring-0 ease-in-out" +
                     (miscCtx.chosenTags.includes(tag)
                       ? " text-white bg-blue-600 hover:bg-blue-700"
                       : " text-gray-500 bg-gray-200 hover:bg-gray-300")

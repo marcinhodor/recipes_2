@@ -18,8 +18,6 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
     editedRecipe ? editedRecipe.tags : []
   );
 
-  useEffect(() => console.log(tags), [tags]);
-
   const [errors, setErrors] = useState({
     titleError: false,
     linkError: false,
@@ -27,7 +25,6 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
   });
 
   const router = useRouter();
-  // console.log(router.pathname);
 
   const tagsSelectOptions = () =>
     recipesCtx.tagsList.map((option: string) => {
@@ -94,6 +91,14 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
     }
   };
 
+  const onChangeSelect = (tags: {}) => {
+    let tagsList: string[] = [];
+    (tags as { value: string; label: string }[]).map((tag) =>
+      tagsList.push(tag.value)
+    );
+    setTags(tagsList);
+  };
+
   return (
     <div className="block max-w-sm p-4 m-auto bg-white rounded-md shadow-lg md:p-6 md:mt-6">
       <form onSubmit={(e) => submitHandler(e)}>
@@ -149,15 +154,11 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
           </label>
           <CreatableSelect
             isMulti
-            options={tagsSelectOptions()}
             value={tags.map((tag) => {
               return { label: tag, value: tag };
             })}
-            onChange={(tags) =>
-              tags.map((tag) => {
-                setTags((prev) => [...new Set([...prev, tag.value])]);
-              })
-            }
+            options={tagsSelectOptions()}
+            onChange={(tags) => onChangeSelect(tags)}
           />
           {errors.tagsError && (
             <small className="block mt-1 text-xs text-red-600">

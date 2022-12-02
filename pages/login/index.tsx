@@ -45,8 +45,6 @@ const Auth = () => {
 
       if (!response.ok) {
         setErrorMsg(data.error);
-        // alert(data.error);
-        // console.log(data);
       } else {
         const { idToken, expiresIn } = data;
         const expirationTime = new Date(
@@ -61,7 +59,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="max-w-sm p-4 mx-auto bg-white rounded-md shadow-lg md:p-6 md:mt-4">
+    <div className="max-w-sm p-4 mx-auto bg-white rounded-md shadow md:p-6 md:mt-4">
       <form onSubmit={submitHandler}>
         <div className="mb-4 md:mb-6 form-group">
           <label
@@ -96,12 +94,12 @@ const Auth = () => {
         <div className="flex justify-around">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            className="px-6 py-2 text-xs font-medium leading-tight text-blue-400 uppercase transition duration-150 ease-in-out border-2 border-blue-400 rounded-md hover:bg-black hover:bg-opacity-5"
           >
             Sign in
           </button>
           <Link href="..">
-            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
+            <button className="px-6 py-2 text-xs font-medium leading-tight text-gray-400 uppercase transition duration-150 ease-in-out border-2 border-gray-400 rounded-md hover:bg-black hover:bg-opacity-5">
               Cancel
             </button>
           </Link>

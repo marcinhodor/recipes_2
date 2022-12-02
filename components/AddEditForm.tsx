@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { FC, FormEvent, useContext, useEffect, useState } from "react";
+import React, { FC, FormEvent, useContext, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import MiscContext from "../context/misc-context";
+
+import isURL from "validator/lib/isURL";
 
 import RecipesContext from "../context/recipes-context";
 
@@ -33,7 +35,7 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
       return { value: option, label: option };
     });
 
-  const submitHandler = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setErrors({
       titleError: false,
@@ -41,7 +43,7 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
       tagsError: false,
     });
     const titleError = title.length === 0;
-    const linkError = link.length === 0;
+    const linkError = link.length === 0 || !isURL(link);
     const tagsError = tags.length === 0;
 
     if (titleError || linkError || tagsError) {
@@ -119,7 +121,7 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
 
   return (
     <div className="block max-w-sm p-4 m-auto bg-white rounded-md shadow-lg md:p-6 md:mt-6">
-      <form onSubmit={(e) => submitHandler(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="mb-4 md:mb-6 form-group">
           <label
             htmlFor="InputTitle"
@@ -159,7 +161,7 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
           />
           {errors.linkError && (
             <small className="block mt-1 text-xs text-red-600">
-              Link can't be empty.
+              Empty or invalud URL.
             </small>
           )}
         </div>

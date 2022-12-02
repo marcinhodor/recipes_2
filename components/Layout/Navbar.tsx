@@ -12,6 +12,18 @@ const Navbar: FC = () => {
 
   const router = useRouter();
 
+  const handleAddButton = () => {
+    if (!authCtx.isLoggedIn) {
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "warning",
+        text: "Only signed in users can add recipes.",
+      });
+      return;
+    }
+    router.push("/add");
+  };
+
   return (
     <>
       {miscCtx.showNotifyModal.show && (
@@ -31,11 +43,12 @@ const Navbar: FC = () => {
         </Link>
         {router.pathname !== "/login" && (
           <>
-            <Link href="/add">
-              <button className="p-2 mx-4 transition duration-150 ease-in-out bg-transparent border border-gray-100 rounded-md hover:bg-blue-700">
-                Add
-              </button>
-            </Link>
+            <button
+              onClick={handleAddButton}
+              className="p-2 mx-4 transition duration-150 ease-in-out bg-transparent border border-gray-100 rounded-md hover:bg-blue-700"
+            >
+              Add
+            </button>
             <div className="flex justify-end">
               {!authCtx.isLoggedIn ? (
                 <Link href="/login">

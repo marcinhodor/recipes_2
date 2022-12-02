@@ -47,9 +47,9 @@ const Navbar: FC = () => {
               onClick={handleAddButton}
               className="p-2 mx-4 transition duration-150 ease-in-out bg-transparent border border-gray-100 rounded-md hover:bg-blue-700"
             >
-              Add
+              Add Recipe
             </button>
-            <div className="flex justify-end">
+            <div className="flex justify-end w-28">
               {!authCtx.isLoggedIn ? (
                 <Link href="/login">
                   <button className="p-2 mx-2 transition duration-150 ease-in-out bg-transparent border border-gray-100 rounded-md md:mx-4 hover:bg-blue-700">

@@ -39,7 +39,7 @@ const DeleteModal = () => {
     }
   };
   return (
-    <div className="fixed z-50 w-full h-full bg-black bg-opacity-30">
+    <div className="fixed z-50 w-full h-full bg-black bg-opacity-40">
       <div className="relative flex flex-col w-64 p-2 mx-auto bg-white border border-gray-100 rounded-md shadow md:p-4 top-10 md:top-32">
         <div className="mb-2 ml-2 md:mb-4">Are you sure?</div>
         <div className="flex justify-around">

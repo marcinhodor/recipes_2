@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { FC, useContext } from "react";
 
 import Button from "./Layout/Button";
@@ -22,7 +21,11 @@ const Card: FC<CardProps> = ({ recipe }: CardProps) => {
 
   const handleEditClick = (url: string) => {
     if (!authCtx.isLoggedIn) {
-      miscCtx.setShowNoAccessModal(true);
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "warning",
+        text: "Only signed in users can modify recipes.",
+      });
       return;
     }
     router.push(url);
@@ -30,7 +33,11 @@ const Card: FC<CardProps> = ({ recipe }: CardProps) => {
 
   const handleDeleteClick = (id: string) => {
     if (!authCtx.isLoggedIn) {
-      miscCtx.setShowNoAccessModal(true);
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "warning",
+        text: "Only signed in users can delete recipes.",
+      });
       return;
     }
     recipeCtx.setRecipeIdToDelete(id);

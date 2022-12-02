@@ -13,7 +13,7 @@ const Modify = () => {
   useLayoutEffect(() => {
     if (!authCtx.isLoggedIn) {
       router.push("/");
-      miscCtx.setShowNoAccessModal(true);
+      miscCtx.setShowNotifyModal({ show: true });
     }
   }, []);
 

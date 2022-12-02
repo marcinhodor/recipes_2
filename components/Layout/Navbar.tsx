@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import AuthContext from "../../context/auth-context";
 import MiscContext from "../../context/misc-context";
-import NoAccessModal from "../NoAccessModal";
+import NotifyModal from "../Layout/NotifyModal";
 
 const Navbar: FC = () => {
   const authCtx = useContext(AuthContext);
@@ -14,7 +14,12 @@ const Navbar: FC = () => {
 
   return (
     <>
-      {miscCtx.showNoAccessModal && <NoAccessModal />}
+      {miscCtx.showNotifyModal.show && (
+        <NotifyModal
+          variant={miscCtx.showNotifyModal.variant!}
+          text={miscCtx.showNotifyModal.text!}
+        />
+      )}
       <nav className="z-30 flex justify-between w-full py-2 text-sm text-gray-100 bg-blue-600 border-b-2 border-blue-600 shadow md:text-base">
         <Link href="/">
           <h1

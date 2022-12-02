@@ -1,5 +1,11 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 
+interface NotifyModal {
+  show: boolean;
+  variant?: "success" | "warning";
+  text?: string;
+}
+
 interface MiscContext {
   query: string;
   setQuery: (query: string) => void;
@@ -8,10 +14,10 @@ interface MiscContext {
   clickedId: string;
   setClickedId: (id: string) => void;
   resetFilters: () => void;
-  showNoAccessModal: boolean;
-  setShowNoAccessModal: (modifier: boolean) => void;
   showDeleteModal: boolean;
   setShowDeleteModal: (modifier: boolean) => void;
+  showNotifyModal: NotifyModal;
+  setShowNotifyModal: (modifier: NotifyModal) => void;
 }
 
 const MiscContext = React.createContext<MiscContext>({
@@ -22,10 +28,10 @@ const MiscContext = React.createContext<MiscContext>({
   clickedId: "",
   setClickedId: (id: string) => {},
   resetFilters: () => {},
-  showNoAccessModal: false,
-  setShowNoAccessModal: (modifier: boolean) => {},
   showDeleteModal: false,
   setShowDeleteModal: (modifier: boolean) => {},
+  showNotifyModal: { show: false },
+  setShowNotifyModal: (modifier: NotifyModal) => {},
 });
 
 type Props = {
@@ -36,8 +42,8 @@ export const MiscContextProvider: React.FC<Props> = (props) => {
   const [query, setQuery] = useState("");
   const [chosenTags, setChosenTags] = useState<string[]>([]);
   const [clickedId, setClickedId] = useState("");
-  const [showNoAccessModal, setShowNoAccessModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showNotifyModal, setShowNotifyModal] = useState({ show: false });
 
   const resetFilters = () => {
     setQuery("");
@@ -53,10 +59,10 @@ export const MiscContextProvider: React.FC<Props> = (props) => {
     clickedId,
     setClickedId,
     resetFilters,
-    showNoAccessModal,
-    setShowNoAccessModal,
     showDeleteModal,
     setShowDeleteModal,
+    showNotifyModal,
+    setShowNotifyModal,
   };
 
   return (

@@ -161,7 +161,7 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
           />
           {errors.linkError && (
             <small className="block mt-1 text-xs text-red-600">
-              Empty or invalud URL.
+              Empty or invalid URL.
             </small>
           )}
         </div>

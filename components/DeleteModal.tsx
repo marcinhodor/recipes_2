@@ -21,10 +21,20 @@ const DeleteModal = () => {
           id: recipesCtx.recipeIdToDelete,
         }),
       });
+      router.push("/");
       miscCtx.setShowDeleteModal(false);
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "success",
+        text: "Recipe deleted successfully.",
+      });
       recipesCtx.setRecipeIdToDelete("");
-      router.reload();
     } catch (error) {
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "warning",
+        text: "Something went wrong while deleting the recipe.",
+      });
       console.log(error);
     }
   };

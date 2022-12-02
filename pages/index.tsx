@@ -10,11 +10,14 @@ import Spinner from "../components/Spinner";
 import AuthContext from "../context/auth-context";
 import RecipesContext from "../context/recipes-context";
 import MiscContext from "../context/misc-context";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const recipesCtx = useContext(RecipesContext);
   const miscCtx = useContext(MiscContext);
   const authCtx = useContext(AuthContext);
+
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,14 +55,12 @@ const Home: NextPage = () => {
     }
 
     getData();
-  }, []);
+  }, [router]);
 
   // Get existing token and token remaining time from LocalStorage
   useEffect(() => {
     const tokenData = authCtx.retrieveStoredToken();
     if (tokenData) {
-      // console.log(tokenData.duration);
-
       authCtx.setToken(tokenData.token);
       authCtx.logoutTimer = setTimeout(authCtx.logout, tokenData.duration);
     }

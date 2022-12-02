@@ -2,11 +2,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, FormEvent, useContext, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
+import MiscContext from "../context/misc-context";
 
 import RecipesContext from "../context/recipes-context";
 
 const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
   const recipesCtx = useContext(RecipesContext);
+  const miscCtx = useContext(MiscContext);
 
   const editedRecipe = recipesCtx.recipes.filter(
     (recipe) => recipe.id === recipeId
@@ -63,13 +65,19 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
 
     let APIurl: string;
     let APImethod: string;
+    let successText: string;
+    let warningText: string;
 
     if (router.pathname.includes("/add")) {
       APIurl = "/api/new";
       APImethod = "POST";
+      successText = "Recipe added successfully.";
+      warningText = "There was an error while adding a recipe.";
     } else {
       APIurl = "/api/edit";
       APImethod = "PUT";
+      successText = "Recipe edited successfully.";
+      warningText = "Something went wrong while editing the recipe.";
     }
 
     try {
@@ -85,8 +93,18 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
           tags,
         }),
       });
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "success",
+        text: successText,
+      });
       router.push("/");
     } catch (error) {
+      miscCtx.setShowNotifyModal({
+        show: true,
+        variant: "warning",
+        text: warningText,
+      });
       console.log(error);
     }
   };

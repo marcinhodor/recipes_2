@@ -2,7 +2,7 @@ import React, { FC, PropsWithChildren, useContext } from "react";
 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import DeleteModal from "./DeleteModal";
+import DeleteModal from "../DeleteModal";
 
 interface LayoutProps {
   children: JSX.Element;

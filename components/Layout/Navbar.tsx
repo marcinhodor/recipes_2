@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import AuthContext from "../../context/auth-context";
 import MiscContext from "../../context/misc-context";
-import NotifyModal from "../Layout/NotifyModal";
+import NotifyModal from "../NotifyModal";
 
 const Navbar: FC = () => {
   const authCtx = useContext(AuthContext);

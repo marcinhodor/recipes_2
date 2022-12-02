@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import Button from "./Button";
 
-import MiscContext from "../../context/misc-context";
+import MiscContext from "../context/misc-context";
 import { useContext } from "react";
-import RecipesContext from "../../context/recipes-context";
+import RecipesContext from "../context/recipes-context";
 
 const DeleteModal = () => {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 
-import Button from "./Layout/Button";
+import Button from "./Button";
 
 import { Recipe } from "../models/interfaces";
 import MiscContext from "../context/misc-context";

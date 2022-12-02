@@ -1,6 +1,5 @@
 import { FC, useContext, useEffect } from "react";
-import { clearTimeout } from "timers";
-import MiscContext from "../../context/misc-context";
+import MiscContext from "../context/misc-context";
 
 interface NotifyModalProps {
   variant: "success" | "warning";

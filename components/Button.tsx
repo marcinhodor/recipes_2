@@ -22,7 +22,7 @@ const Button: FC<ButtonProps> = ({ children, variant }) => {
 
   return (
     <button
-      className={`${buttonVariant()} px-6 py-2 text-xs font-medium leading-tight uppercase transition duration-150 ease-in-out border-2 rounded-md hover:bg-black hover:bg-opacity-5`}
+      className={`${buttonVariant()} w-20 py-2 text-xs font-medium leading-tight uppercase transition duration-150 ease-in-out border-2 rounded-md hover:bg-black hover:bg-opacity-5`}
     >
       {children}
     </button>

@@ -120,7 +120,7 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
   };
 
   return (
-    <div className="block max-w-sm p-4 m-auto bg-white rounded-md shadow-lg md:p-6 md:mt-6">
+    <div className="block max-w-sm p-4 m-auto bg-white rounded-md shadow md:p-6 md:mt-6">
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="mb-4 md:mb-6 form-group">
           <label
@@ -189,12 +189,12 @@ const AddModifyForm: FC<{ recipeId?: string }> = ({ recipeId }) => {
         <div className="flex justify-around">
           <button
             type="submit"
-            className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            className="w-24 py-2 text-xs font-medium leading-tight text-blue-400 uppercase transition duration-150 ease-in-out border-2 border-blue-400 rounded-md hover:bg-black hover:bg-opacity-5"
           >
             Save
           </button>
           <Link href="..">
-            <button className="px-6 py-2.5 border-blue-600 text-blue-600 font-medium text-xs leading-tight uppercase rounded-md shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out">
+            <button className="w-24 py-2 text-xs font-medium leading-tight text-gray-400 uppercase transition duration-150 ease-in-out border-2 border-gray-400 rounded-md hover:bg-black hover:bg-opacity-5">
               Cancel
             </button>
           </Link>

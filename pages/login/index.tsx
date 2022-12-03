@@ -2,6 +2,7 @@ import { useRef, useContext, useState } from "react";
 import { useRouter } from "next/router";
 
 import AuthContext from "../../context/auth-context";
+import MiscContext from "../../context/misc-context";
 import Link from "next/link";
 
 type Data = {
@@ -19,6 +20,7 @@ const Auth = () => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
   const authCtx = useContext(AuthContext);
+  const miscCts = useContext(MiscContext);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,6 +47,7 @@ const Auth = () => {
 
       if (!response.ok) {
         setErrorMsg(data.error);
+        throw new Error(errorMsg!);
       } else {
         const { idToken, expiresIn } = data;
         const expirationTime = new Date(
@@ -52,9 +55,18 @@ const Auth = () => {
         );
         authCtx.login(idToken, expirationTime.toString());
         router.push("/");
+        miscCts.setShowNotifyModal({
+          show: true,
+          variant: "success",
+          text: "Log in successful. Hello again!",
+        });
       }
     } catch (err) {
-      console.log(err);
+      miscCts.setShowNotifyModal({
+        show: true,
+        variant: "warning",
+        text: "Could not log in! Check your credentials and try again.",
+      });
     }
   };
 
@@ -94,17 +106,22 @@ const Auth = () => {
         <div className="flex justify-around">
           <button
             type="submit"
-            className="px-6 py-2 text-xs font-medium leading-tight text-blue-400 uppercase transition duration-150 ease-in-out border-2 border-blue-400 rounded-md hover:bg-black hover:bg-opacity-5"
+            className="w-24 py-2 text-xs font-medium leading-tight text-blue-400 uppercase transition duration-150 ease-in-out border-2 border-blue-400 rounded-md hover:bg-black hover:bg-opacity-5"
           >
             Sign in
           </button>
           <Link href="..">
-            <button className="px-6 py-2 text-xs font-medium leading-tight text-gray-400 uppercase transition duration-150 ease-in-out border-2 border-gray-400 rounded-md hover:bg-black hover:bg-opacity-5">
+            <button className="w-24 py-2 text-xs font-medium leading-tight text-gray-400 uppercase transition duration-150 ease-in-out border-2 border-gray-400 rounded-md hover:bg-black hover:bg-opacity-5">
               Cancel
             </button>
           </Link>
         </div>
       </form>
+      <div className="mt-4 md:mt-6">
+        <h1>For testing purposes use the following credentials:</h1>
+        <p>Email: test@test.com</p>
+        <p>Password: test123</p>
+      </div>
     </div>
   );
 };
